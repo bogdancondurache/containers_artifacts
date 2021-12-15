@@ -19,3 +19,19 @@ spec:
         image: registryldb3678.azurecr.io/trips:1.0
         ports:
         - containerPort: 80
+        env:
+          - name: SQL_SERVER
+            valueFrom:
+              secretKeyRef:
+                name: db-user-pass
+                key: sqlserver
+          - name: SQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: db-user-pass
+                key: username
+          - name: SQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-user-pass
+                key: password
