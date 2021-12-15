@@ -19,3 +19,18 @@ spec:
         image: registryldb3678.azurecr.io/poi:1.0
         ports:
         - containerPort: 80
+        env:
+          - name: SQL_PASSWORD
+            value: RandomPass123 # TODO: add as secret
+          - name: SQL_SERVER
+            value: 172.17.0.2 # TODO: :D 
+          - name: SQL_USER
+            value: SA
+          - name: ASPNETCORE_ENVIRONMENT
+            value: Local
+
+# docker run -d -p 8080:80 --name poi 
+# -e "SQL_PASSWORD=RandomPass123" 
+# -e "SQL_SERVER=172.17.0.2" 
+# -e "SQL_USER=SA" 
+# -e "ASPNETCORE_ENVIRONMENT=Local" tripinsights/poi:1.0
