@@ -16,22 +16,29 @@ spec:
     spec:
       containers:
       - name: poi
+        resources:
+          limits:
+            cpu: "1"
+          requests:
+            cpu: "0.5"
         image: registryldb3678.azurecr.io/poi:1.0
         ports:
         - containerPort: 80
         env:
-          # - name: SQL_PASSWORD
-          #   value: # TODO: add as secret
+          - name: SQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-user-pass
+                key: password
           - name: SQL_SERVER
-            value: 172.17.0.2 # TODO: :D 
+            valueFrom:
+              secretKeyRef:
+                name: db-user-pass
+                key: sqlserver
           - name: SQL_USER
-            value: SA
+            valueFrom:
+              secretKeyRef:
+                name: db-user-pass
+                key: username
           - name: ASPNETCORE_ENVIRONMENT
-            value: Local
-          
-
-# docker run -d -p 8080:80 --name poi 
-# -e "SQL_PASSWORD=" 
-# -e "SQL_SERVER=" 
-# -e "SQL_USER=SA" 
-# -e "ASPNETCORE_ENVIRONMENT=Local" tripinsights/poi:1.0
+            value: Development
