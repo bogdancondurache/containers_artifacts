@@ -17,12 +17,6 @@ spec:
       containers:
       - name: userprofile 
         image: registryldb3678.azurecr.io/userprofile:1.0
-        resources:
-          limits:
-            cpu: "1"
-            memory: "300m"
-          requests:
-            cpu: "0.5"
         ports:
         - containerPort: 80
         env:
@@ -41,5 +35,3 @@ spec:
               secretKeyRef:
                 name: db-user-pass
                 key: username
-          - name: ASPNETCORE_ENVIRONMENT
-            value: Local
