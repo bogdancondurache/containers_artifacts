@@ -6,7 +6,7 @@ metadata:
     run: userprofile
 spec:
   selector:
-    run: userprofile
+    app: userprofile
   ports:
     - protocol: TCP
       port: 80
