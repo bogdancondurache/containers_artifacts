@@ -42,11 +42,13 @@ metadata:
   namespace: api
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
+  kind: ClusterRole
   name: view-all
 subjects:
 - kind: Group
-  name: 2ab85023-afa6-43ab-8181-12efa01a2b36
+  name: 2ab85023-afa6-43ab-8181-12efa01a2b36  
+- kind: Group
+  name: 60771f39-a8fb-4ed0-a4fb-517eadc85c3f
 
 
 ---
@@ -65,22 +67,6 @@ subjects:
   namespace: api
   name: 2ab85023-afa6-43ab-8181-12efa01a2b36
 
----
-
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: web-user-view-all
-  namespace: web
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: view-all
-subjects:
-- kind: Group
-  name: 60771f39-a8fb-4ed0-a4fb-517eadc85c3f
-
-  
 ---
 
 kind: RoleBinding
