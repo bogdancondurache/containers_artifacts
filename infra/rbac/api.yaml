@@ -18,7 +18,7 @@ metadata:
 rules:
 - apiGroups: [""]
   resources: ["*"]
-  verbs: ["update", "patch"]
+  verbs: ["create", "update", "patch"]
 
 
 ---
@@ -30,7 +30,7 @@ metadata:
 rules:
 - apiGroups: [""]
   resources: ["*"]
-  verbs: ["update", "patch"]
+  verbs: ["create", "update", "patch"]
 
 
 ---
