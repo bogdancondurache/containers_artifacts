@@ -1,0 +1,93 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: internal-gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: tripviewer
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - internal-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+  - route:
+    - destination:
+        host: tripviewer.web.svc.cluster.local
+        port:
+          number: 80
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: trips
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - internal-gateway
+  http:
+  - match:
+    - uri:
+        prefix: "/trips/"
+  - route:
+    - destination:
+        host: trips.api.svc.cluster.local
+        port:
+          number: 80
+
+# ---
+# apiVersion: networking.istio.io/v1alpha3
+# kind: VirtualService
+# metadata:
+#   name: tripviewer
+# spec:
+#   hosts:
+#   - "*"
+#   gateways:
+#   - internal-gateway
+#   http:
+#   - match:
+#     - uri:
+#         prefix: /
+#   - route:
+#     - destination:
+#         host: tripviewer.web.svc.cluster.local
+#         port:
+#           number: 80
+
+# ---
+# apiVersion: networking.istio.io/v1alpha3
+# kind: VirtualService
+# metadata:
+#   name: tripviewer
+# spec:
+#   hosts:
+#   - "*"
+#   gateways:
+#   - internal-gateway
+#   http:
+#   - match:
+#     - uri:
+#         prefix: /
+#   - route:
+#     - destination:
+#         host: tripviewer.web.svc.cluster.local
+#         port:
+#           number: 80
