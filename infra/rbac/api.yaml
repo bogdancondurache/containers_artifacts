@@ -3,7 +3,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: api-view
 rules:
-- apiGroups: [""]
+- apiGroups: ["rbac.authorization.k8s.io"]
   resources: ["*"]
   verbs: ["get", "list", "watch"]
 
@@ -14,7 +14,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: web-view
 rules:
-- apiGroups: [""]
+- apiGroups: ["rbac.authorization.k8s.io"]
   resources: ["*"]
   verbs: ["get", "list", "watch"]
 
@@ -26,7 +26,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: api-edit
 rules:
-- apiGroups: [""]
+- apiGroups: ["rbac.authorization.k8s.io"]
   resources: ["*"]
   verbs: ["update", "patch"]
 
@@ -38,7 +38,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: web-edit
 rules:
-- apiGroups: [""]
+- apiGroups: ["rbac.authorization.k8s.io"]
   resources: ["*"]
   verbs: ["update", "patch"]
 
