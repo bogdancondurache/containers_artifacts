@@ -1,0 +1,148 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: api-view
+  namespace: api
+rules:
+- apiGroups: [""]
+  resources: ["*"]
+  verbs: ["get", "list", "watch"]
+
+
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: web-view
+  namespace: web
+rules:
+- apiGroups: [""]
+  resources: ["*"]
+  verbs: ["get", "list", "watch"]
+
+
+---
+
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: api-edit
+  namespace: api
+rules:
+- apiGroups: [""]
+  resources: ["*"]
+  verbs: ["update", "patch"]
+
+
+---
+
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: web-edit
+  namespace: web
+rules:
+- apiGroups: [""]
+  resources: ["*"]
+  verbs: ["update", "patch"]
+
+
+---
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: api-user-view-api
+  namespace: api
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: api-view
+subjects:
+- kind: Group
+  namespace: api
+  name: 2ab85023-afa6-43ab-8181-12efa01a2b36
+
+
+---
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: api-user-view-web
+  namespace: api
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: web-view
+subjects:
+- kind: Group
+  namespace: web
+  name: 2ab85023-afa6-43ab-8181-12efa01a2b36
+
+
+---
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: api-user-edit
+  namespace: api
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: api-edit
+subjects:
+- kind: Group
+  namespace: api
+  name: 2ab85023-afa6-43ab-8181-12efa01a2b36
+
+---
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: web-user-view-web
+  namespace: web
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: web-view
+subjects:
+- kind: Group
+  namespace: web
+  name: 60771f39-a8fb-4ed0-a4fb-517eadc85c3f
+
+
+---
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: web-user-view-api
+  namespace: web
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: api-view
+subjects:
+- kind: Group
+  namespace: api
+  name: 60771f39-a8fb-4ed0-a4fb-517eadc85c3f
+
+
+---
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: web-user-edit
+  namespace: web
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: web-edit
+subjects:
+- kind: Group
+  namespace: web
+  name: 60771f39-a8fb-4ed0-a4fb-517eadc85c3f
