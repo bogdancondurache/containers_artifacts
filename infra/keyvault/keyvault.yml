@@ -5,20 +5,37 @@ metadata:
   name: azure-kvname-user-msi
 spec:
   provider: azure
+  secretObjects:                                 # [OPTIONAL] SecretObject defines the desired state of synced K8s secret objects
+  - secretName: secrets-from-kv
+    type: Opaque
+    data: 
+    - objectName: sqlpass                   # name of the mounted content to sync. this could be the object name or object alias 
+      key: password
+    - objectName: sqlsrv                   # name of the mounted content to sync. this could be the object name or object alias 
+      key: sqlserver
+    - objectName: sqluname                   # name of the mounted content to sync. this could be the object name or object alias 
+      key: username
   parameters:
     usePodIdentity: "false"
     useVMManagedIdentity: "true"          # Set to true for using managed identity
     userAssignedIdentityID: c54880cb-281f-4638-b89e-81e9e704d1e5  # Set the clientID of the user-assigned managed identity to use
     keyvaultName: teamKeyvault3678        # Set to the name of your key vault
     cloudName: ""                         # [OPTIONAL for Azure] if not provided, the Azure environment defaults to AzurePublicCloud
-    objects:  |
+    objects: |
       array:
         - |
-          objectName: secret1
+          objectName: sqlpassword
           objectType: secret              # object types: secret, key, or cert
+          objectAlias: sqlpass
           objectVersion: ""               # [OPTIONAL] object versions, default to latest if empty
         - |
-          objectName: key1
-          objectType: key
+          objectName: sqlserver
+          objectType: secret
+          objectAlias: sqlsrv
+          objectVersion: ""
+        - |
+          objectName: sqlusername
+          objectAlias: sqluname
+          objectType: secret
           objectVersion: ""
     tenantId: 5c18538a-3cd4-4a0d-98af-f1a28317a657                # The tenant ID of the key vault

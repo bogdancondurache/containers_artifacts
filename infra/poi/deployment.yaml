@@ -32,17 +32,17 @@ spec:
           - name: SQL_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: db-user-pass
+                name: secrets-from-kv
                 key: password
           - name: SQL_SERVER
             valueFrom:
               secretKeyRef:
-                name: db-user-pass
+                name: secrets-from-kv
                 key: sqlserver
           - name: SQL_USER
             valueFrom:
               secretKeyRef:
-                name: db-user-pass
+                name: secrets-from-kv
                 key: username
           - name: ASPNETCORE_ENVIRONMENT
             value: Development
