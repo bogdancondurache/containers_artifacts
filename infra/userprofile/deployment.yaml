@@ -17,21 +17,34 @@ spec:
       containers:
       - name: userprofile 
         image: registryldb3678.azurecr.io/userprofile:1.0
+        volumeMounts:
+        - name: secrets-store01-inline
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
         ports:
         - containerPort: 80
         env:
           - name: SQL_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: db-user-pass
+                name: secrets-from-kv
                 key: password
           - name: SQL_SERVER
             valueFrom:
               secretKeyRef:
-                name: db-user-pass
+                name: secrets-from-kv
                 key: sqlserver
           - name: SQL_USER
             valueFrom:
               secretKeyRef:
-                name: db-user-pass
+                name: secrets-from-kv
                 key: username
+          - name: ASPNETCORE_ENVIRONMENT
+            value: Development
+      volumes:
+      - name: secrets-store01-inline
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "azure-kvname-user-msi"
