@@ -2,6 +2,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: internal-gateway
+  namespace: default
 spec:
   selector:
     istio: ingressgateway
@@ -17,6 +18,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: tripviewer
+  namespace: default
 spec:
   hosts:
   - "*"
@@ -26,17 +28,16 @@ spec:
   - match:
     - uri:
         prefix: /
-  - route:
+    route:
     - destination:
         host: tripviewer.web.svc.cluster.local
-        port:
-          number: 80
 
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: trips
+  namespace: default
 spec:
   hosts:
   - "*"
@@ -45,49 +46,71 @@ spec:
   http:
   - match:
     - uri:
-        prefix: "/trips/"
-  - route:
+        prefix: /api/trips
+    route:
     - destination:
         host: trips.api.svc.cluster.local
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: userprofile
+  namespace: default
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - internal-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /api/user
+    route:
+    - destination:
+        host: userprofile.api.svc.cluster.local
         port:
           number: 80
 
-# ---
-# apiVersion: networking.istio.io/v1alpha3
-# kind: VirtualService
-# metadata:
-#   name: tripviewer
-# spec:
-#   hosts:
-#   - "*"
-#   gateways:
-#   - internal-gateway
-#   http:
-#   - match:
-#     - uri:
-#         prefix: /
-#   - route:
-#     - destination:
-#         host: tripviewer.web.svc.cluster.local
-#         port:
-#           number: 80
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: user-java
+  namespace: default
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - internal-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /api/user-java
+    route:
+    - destination:
+        host: user-java.api.svc.cluster.local
+        port:
+          number: 80
 
-# ---
-# apiVersion: networking.istio.io/v1alpha3
-# kind: VirtualService
-# metadata:
-#   name: tripviewer
-# spec:
-#   hosts:
-#   - "*"
-#   gateways:
-#   - internal-gateway
-#   http:
-#   - match:
-#     - uri:
-#         prefix: /
-#   - route:
-#     - destination:
-#         host: tripviewer.web.svc.cluster.local
-#         port:
-#           number: 80
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: poi
+  namespace: default
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - internal-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /api/poi
+    route:
+    - destination:
+        host: poi.api.svc.cluster.local
+        port:
+          number: 80
